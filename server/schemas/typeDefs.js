@@ -10,6 +10,12 @@ const typeDefs = gql`
     userType: UserType
   }
 
+enum itemStatus{
+    AVAILABLE
+    RESERVED
+    CHECKED_OUT
+}
+
   enum UserType {
     CLIENT
     ADMIN
@@ -57,7 +63,7 @@ const typeDefs = gql`
       createUser(user:UserInput!): Auth
       createItem(item:ItemInput!) : Item
       promoteUser(userId:ID!, userType:String!): User
-      itemCheck(itemId:ID!, borrower:User, dueDate:String!): User
+      itemReserve(itemId:ID!, borrower:User, dueDate:String!): User
       returnItem(itemId:ID!)
 
   }
