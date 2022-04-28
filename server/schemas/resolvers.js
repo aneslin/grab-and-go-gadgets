@@ -39,7 +39,22 @@ const resolvers = {
           "description",
           "dueDate",
         ]);
-      }
+      }console.log(
+        `${context.user.name} does not have permission to see all users`
+      );
+      return;
     },
   },
+
+  Mutation: {
+    createUser: async(parent, args) => {
+        const user = await User.create(args)
+        const token = signToken(user)
+        return(user,token)
+    },
+
+    
+
+
+  }
 };
