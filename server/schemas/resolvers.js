@@ -39,7 +39,8 @@ const resolvers = {
           "description",
           "dueDate",
         ]);
-      }console.log(
+      }
+      console.log(
         `${context.user.name} does not have permission to see all users`
       );
       return;
@@ -47,14 +48,24 @@ const resolvers = {
   },
 
   Mutation: {
-    createUser: async(parent, args) => {
-        const user = await User.create(args)
-        const token = signToken(user)
-        return(user,token)
+    createUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+      return user, token;
     },
 
-    
-
-
-  }
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new AuthenticationError("invalid user");
+        //requires a iscorrectPassword function from models
+        const correctPw = await user.isCorrectPassword(password);
+        if (!correctPw) {
+          throw new AuthenticationError("invalid user");
+        }
+        const token = signToken(user);
+        return { user, token };
+      }
+    },
+  },
 };
