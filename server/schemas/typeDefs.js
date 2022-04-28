@@ -25,22 +25,22 @@ const typeDefs = gql`
     name: String!
     image: String!
     description: String
-    borrower: [User]
+    borrower: User
     dueDate: String
   }
 
-  input Item {
+  input ItemInput {
     name: String!
     image: String!
     description: String
 
   }
 
-  input User{
+  input UserInput{
     username: String!
     email: String!
     password: String!
-    userType: UserType
+    userType: UserType!
 
   }
 
@@ -52,6 +52,16 @@ const typeDefs = gql`
       items: [Item]
 
   }
+  type Mutation {
+      login(email:String!, password:String!): Auth
+      createUser(user:UserInput!): Auth
+      createItem(item:ItemInput!) : Item
+      promoteUser(userId:ID!, userType:String!): User
+      itemCheck(itemId:ID!, borrower:User, dueDate:String!): User
+      returnItem(itemId:ID!)
+
+  }
+
 `;
 
 module.exports = typeDefs;
