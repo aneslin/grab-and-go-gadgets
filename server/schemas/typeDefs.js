@@ -46,8 +46,10 @@ const typeDefs = gql`
 
   type Query{
       me: User
-      users: User
+      users: [User]
+      user(_id:ID!): User
       item(_id:ID!): Item
+      items: [Item]
 
   }
 `;
