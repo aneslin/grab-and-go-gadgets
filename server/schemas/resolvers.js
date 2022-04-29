@@ -7,8 +7,7 @@ const resolvers = {
     users: async (parent, args, context) => {
       console.log(context.user);
       if (context.user.userType === "ADMIN") {
-        userData = await User.find()
-        .populate("reservedItems");
+        userData = await User.find().populate("reservedItems");
         return userData;
       }
       console.log(
@@ -20,7 +19,7 @@ const resolvers = {
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id }).populate(
-          "Item",
+          "reservedItems"
         );
         return userData;
       }
@@ -30,7 +29,7 @@ const resolvers = {
     user: async (parent, { username }, context) => {
       console.log(username);
       if (context.user.userType === "ADMIN") {
-        return User.findOne({ username }).populate("Item");
+        return User.findOne({ username }).populate("reservedItems");
       }
       console.log("no access");
       return;
@@ -78,7 +77,7 @@ const resolvers = {
       }
       throw new AuthenticationError("invalid permissions");
     },
-
+    //set and item due, date, change status and add to item array FOR SELF
     reserveItem: async (parent, { itemId, itemStatus, dueDate }, context) => {
       if (context.user) {
         const item = await Item.findOneAndUpdate(
@@ -86,15 +85,49 @@ const resolvers = {
           { itemStatus: itemStatus, dueDate: dueDate },
           { new: true }
         );
-        console.log(item)
-         return  User.findByIdAndUpdate(
+        console.log(item);
+        return User.findByIdAndUpdate(
           { _id: context.user._id },
           { $addToSet: { reservedItems: item._id } },
           { new: true }
         ).populate("reservedItems");
-      
       }
       throw new AuthenticationError("you need to be logged in");
+    },
+    //set and item due, date, change status and add to item array FOR OTHER
+    reserveOtherItem: async (
+      parent,
+      { itemId, userId, itemStatus, dueDate },
+      context
+    ) => {
+      if (context.user.userType === "ADMIN") {
+        const item = await Item.findOneAndUpdate(
+          { _id: itemId },
+          { itemStatus: itemStatus, dueDate: dueDate },
+          { new: true }
+        );
+        console.log(item);
+        return User.findByIdAndUpdate(
+          { _id: userId },
+          { $addToSet: { reservedItems: item._id } },
+          { new: true }
+        ).populate("reservedItems");
+      }
+      throw new AuthenticationError("you need to be logged in");
+    },
+    returnItem: async (parent, { userId, itemId }, context) => {
+      if (context.user.userType === "ADMIN") {
+        const item = await Item.findOneAndUpdate(
+          { _id: itemId },
+          { itemStatus: "AVAILABLE", dueDate: null },
+         
+        );
+        return User.findByIdAndUpdate(
+          { _id: userId },
+          { $pull: { reservedItems: item._id } },
+          { new: true }
+        ).populate("reservedItems");
+      }
     },
   },
 };
