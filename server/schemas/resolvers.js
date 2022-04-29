@@ -1,12 +1,12 @@
 const { signToken } = require("../utils/auth");
 const { AuthenticationError } = require("apollo-server-express");
-
+const { Items, Users} = require('../models')
 const resolvers = {
   Query: {
     //find all users - context.user is required for security
     users: async (parent, args, context) => {
       if (context.user.userType === "Admin") {
-        userData = await User.find().populate("Item", [
+        userData = await Users.find().populate("Item", [
           "_id",
           "name",
           "description",
@@ -22,7 +22,7 @@ const resolvers = {
 
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id }).populate(
+        const userData = await Users.findOne({ _id: context.user._id }).populate(
           "Item",
           ["_id", "name", "description", "dueDate"]
         );
@@ -33,7 +33,7 @@ const resolvers = {
 
     user: async (parent, { username }, context) => {
       if (context.user.userType === "Admin") {
-        userData = await User.findOne({ username }).populate("Item", [
+        userData = await Users.findOne({ username }).populate("Item", [
           "_id",
           "name",
           "description",
@@ -49,17 +49,18 @@ const resolvers = {
 
   Mutation: {
     createUser: async (parent, args) => {
-      const user = await User.create(args);
+      const user = await Users.create(args);
       const token = signToken(user);
       return user, token;
     },
 
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+      const user = await Users.findOne({ email });
       if (!user) {
-        throw new AuthenticationError("invalid user");
+        throw new AuthenticationError("invalid user"); }
         //requires a iscorrectPassword function from models
         const correctPw = await user.isCorrectPassword(password);
+     
         if (!correctPw) {
           throw new AuthenticationError("invalid user");
         }
@@ -70,5 +71,7 @@ const resolvers = {
 
     
 
-  },
-};
+  }
+;
+
+module.exports = resolvers
