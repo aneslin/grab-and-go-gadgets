@@ -35,9 +35,9 @@ module.exports = {
         // return updated request object
         return req;
       },
-      signToken : function ({username, email, _id}){
-        const payload  = {username, email, _id}
-
+      signToken : function ({username, email, _id, userType}){
+        const payload  = {username, email, _id, userType}
+        console.log("payload===>",payload)
         return jwt.sign({data:payload}, secret, {expiresIn:expiration})
     }
 

@@ -18,12 +18,13 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
-  reservedItems: {
+  reservedItems: [{
     type: Schema.Types.ObjectId,
     ref: "Item",
-  },
+  }],
   userType: {
     type: String,
+    default:"CLIENT"
   },
 });
 
