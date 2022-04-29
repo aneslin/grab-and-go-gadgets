@@ -1,18 +1,14 @@
 const { signToken } = require("../utils/auth");
 const { AuthenticationError } = require("apollo-server-express");
-const { Items, User } = require("../models");
+const { Item, User } = require("../models");
 const resolvers = {
   Query: {
     //find all users - context.user is required for security
     users: async (parent, args, context) => {
       console.log(context.user);
       if (context.user.userType === "ADMIN") {
-        userData = await User.find().populate("Item", [
-          "_id",
-          "name",
-          "description",
-          "dueDate",
-        ]);
+        userData = await User.find()
+        .populate("reservedItems");
         return userData;
       }
       console.log(
@@ -25,7 +21,6 @@ const resolvers = {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id }).populate(
           "Item",
-          ["_id", "name", "description", "dueDate"]
         );
         return userData;
       }
@@ -42,12 +37,12 @@ const resolvers = {
     },
     //get all items
     items: async () => {
-      const items = await Items.find();
+      const items = await Item.find();
       return items;
     },
     //get one item by id
     item: async (parent, { _id }) => {
-      return Items.findOne({ _id });
+      return Item.findOne({ _id });
     },
   },
 
@@ -78,10 +73,28 @@ const resolvers = {
     createItem: async (parent, args, context) => {
       if (context.user.userType === "ADMIN") {
         console.log(args);
-        const item = await Items.create(args);
+        const item = await Item.create(args);
         return { item };
       }
       throw new AuthenticationError("invalid permissions");
+    },
+
+    reserveItem: async (parent, { itemId, itemStatus, dueDate }, context) => {
+      if (context.user) {
+        const item = await Item.findOneAndUpdate(
+          { _id: itemId },
+          { itemStatus: itemStatus, dueDate: dueDate },
+          { new: true }
+        );
+        console.log(item)
+         return  User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { reservedItems: item._id } },
+          { new: true }
+        ).populate("reservedItems");
+      
+      }
+      throw new AuthenticationError("you need to be logged in");
     },
   },
 };

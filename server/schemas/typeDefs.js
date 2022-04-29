@@ -34,6 +34,7 @@ enum itemStatus{
     image: String!
     description: String
     dueDate: String
+    itemStatus:String
   }
 
   input ItemInput {
@@ -64,7 +65,7 @@ enum itemStatus{
       createUser(username:String!, email:String!, password:String!, userType: UserType): Auth
       createItem(name:String!, image:String!, description:String) : Item
      
-      itemReserve(itemId:ID!,  dueDate:String!): User
+      reserveItem(itemId:ID!, itemStatus:itemStatus dueDate:String!): User
       returnItem(itemId:ID!):Item
 
   }
