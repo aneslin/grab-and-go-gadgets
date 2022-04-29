@@ -2,6 +2,7 @@ import React from 'react';
 import {Row, Col, Button} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import './Home.css'
+// import Homepage from '../assets/homepage.jpg'
 
 const Home = () => {
   return (
@@ -15,7 +16,9 @@ const Home = () => {
         </LinkContainer>
       </div>
       </Col>
-      <Col md={6} className="home__bg" ></Col>
+      <Col md={6} className="home__bg" >
+      {/* <img src={Homepage} alt="" className="home__bg"/> */}
+      </Col>
     </Row>
     
   )
