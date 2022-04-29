@@ -13,15 +13,18 @@ const PORT = process.env.PORT || 3001
 
 const startServer = async () => {
     const server = new ApolloServer({
-        typeDefs,
-        resolvers,
-        context: authMiddleware
+      typeDefs,
+      resolvers,
+      context: authMiddleware
     })
-    await server.start()
-    //console.log(`Starting server on ${PORT}${server.graphqlPath}`)
-    server.applyMiddleware({ app })
-}
-startServer()
+  
+  
+  await server.start()
+  
+  server.applyMiddleware({app})
+  
+  console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
+  };
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -29,8 +32,8 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client/build")));
   }
-  
-  //app.use(routes);
+  startServer()
+
   
   db.once("open", () => {
     app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));

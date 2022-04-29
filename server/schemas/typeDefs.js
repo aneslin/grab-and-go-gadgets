@@ -8,6 +8,7 @@ const typeDefs = gql`
     email: String!
     reservedItems: [Item]
     userType: UserType
+
   }
 
 enum itemStatus{
@@ -31,7 +32,6 @@ enum itemStatus{
     name: String!
     image: String!
     description: String
-    borrower: User
     dueDate: String
   }
 
@@ -63,8 +63,8 @@ enum itemStatus{
       createUser(user:UserInput!): Auth
       createItem(item:ItemInput!) : Item
       promoteUser(userId:ID!, userType:String!): User
-      itemReserve(itemId:ID!, borrower:User, dueDate:String!): User
-      returnItem(itemId:ID!)
+      itemReserve(itemId:ID!,  dueDate:String!): User
+      returnItem(itemId:ID!):Item
 
   }
 
