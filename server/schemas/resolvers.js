@@ -5,7 +5,8 @@ const resolvers = {
   Query: {
     //find all users - context.user is required for security
     users: async (parent, args, context) => {
-      if (context.user.userType === "Admin") {
+      console.log(context.user.userType)
+      if (context.user.userType === "ADMIN") {
         userData = await Users.find().populate("Item", [
           "_id",
           "name",
@@ -65,6 +66,7 @@ const resolvers = {
           throw new AuthenticationError("invalid user");
         }
         const token = signToken(user);
+        console.log(user)
         return { user, token };
       }
     },

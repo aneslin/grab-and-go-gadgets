@@ -7,7 +7,7 @@ const typeDefs = gql`
     username: String!
     email: String!
     reservedItems: [Item]
-    userType: UserType
+    userType: String
 
   }
 
@@ -25,6 +25,7 @@ enum itemStatus{
   type Auth {
     token: ID!
     user: User
+    userType:String!
   }
 
   type Item {
@@ -60,7 +61,7 @@ enum itemStatus{
   }
   type Mutation {
       login(email:String!, password:String!): Auth
-      createUser(username:String!, email:String!, password:String!, userType:String!): Auth
+      createUser(username:String!, email:String!, password:String!, userType: UserType!): Auth
       createItem(item:ItemInput!) : Item
      
       itemReserve(itemId:ID!,  dueDate:String!): User
