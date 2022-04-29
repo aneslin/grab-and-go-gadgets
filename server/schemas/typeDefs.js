@@ -54,14 +54,14 @@ enum itemStatus{
   type Query{
       me: User
       users: [User]
-      user(_id:ID!): User
+      user(username:String!): User
       item(_id:ID!): Item
       items: [Item]
 
   }
   type Mutation {
       login(email:String!, password:String!): Auth
-      createUser(username:String!, email:String!, password:String!, userType: UserType!): Auth
+      createUser(username:String!, email:String!, password:String!, userType: UserType): Auth
       createItem(name:String!, image:String!, description:String) : Item
      
       itemReserve(itemId:ID!,  dueDate:String!): User
