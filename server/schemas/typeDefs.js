@@ -60,9 +60,9 @@ enum itemStatus{
   }
   type Mutation {
       login(email:String!, password:String!): Auth
-      createUser(user:UserInput!): Auth
+      createUser(username:String!, email:String!, password:String!, userType:String!): Auth
       createItem(item:ItemInput!) : Item
-      promoteUser(userId:ID!, userType:String!): User
+     
       itemReserve(itemId:ID!,  dueDate:String!): User
       returnItem(itemId:ID!):Item
 
