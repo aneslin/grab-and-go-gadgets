@@ -5,7 +5,7 @@ const resolvers = {
   Query: {
     //find all users - context.user is required for security
     users: async (parent, args, context) => {
-      console.log(context.user.userType)
+      console.log(context.user)
       if (context.user.userType === "ADMIN") {
         userData = await Users.find().populate("Item", [
           "_id",
@@ -46,6 +46,11 @@ const resolvers = {
       );
       return;
     },
+
+    items: async () => {
+     const items = await Items.find()
+     return items
+    }
   },
 
   Mutation: {
@@ -68,6 +73,16 @@ const resolvers = {
         const token = signToken(user);
         console.log(user)
         return { user, token };
+      },
+
+      createItem: async ( parent, args, context) => {
+        if (context.user.userType==='ADMIN'){
+          console.log(args)
+          const item = await Items.create(args)
+          return {item}
+
+        }
+        throw new AuthenticationError("invalid permissions")
       }
     },
 

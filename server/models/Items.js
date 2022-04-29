@@ -23,6 +23,6 @@ const itemSchema = new Schema(
   }
 );
 
-const Item = model('Item', itemSchema);
+const Items = model('Item', itemSchema);
 
-module.exports = Item;
+module.exports = Items;
