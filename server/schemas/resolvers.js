@@ -35,14 +35,20 @@ const resolvers = {
     user: async (parent, { username }, context) => {
       console.log(username)
      if (context.user.userType === "ADMIN"){
-       return User.findOne({ username }).populate("Item");
+       
+      return User.findOne({ username }).populate("Item");
      }
      console.log("no access")
+     return
     },
 
     items: async () => {
      const items = await Items.find()
      return items
+    },
+
+    item: async(parent, { _id }) => {
+        return Items.findOne({ _id})
     }
   },
 
