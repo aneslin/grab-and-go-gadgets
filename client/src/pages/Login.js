@@ -1,40 +1,80 @@
-import React from 'react'
-import { Container, Form, Button, Col, Row } from "react-bootstrap"
-import { Link } from "react-router-dom";
-import "./Login.css";
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../utils/mutations';
 
-const Login = () => {
+import Auth from '../utils/auth';
+
+const Login = (props) => {
+  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [login, { error }] = useMutation(LOGIN_USER);
+
+  // update state based on form input changes
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  // submit form
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await login({
+        variables: { ...formState },
+      });
+
+      Auth.login(data.login.token);
+    } catch (e) {
+      console.error(e);
+    }
+
+    // clear form values
+    setFormState({
+      email: '',
+      password: '',
+    });
+  };
+
   return (
-    <Container>
-      <Row>
-        <Col md={5} className="login__bg"> </Col>
-        <Col md={7} className="d-flex align-items-center justify-content-center flex-direction-column">
-    <Form style={{width: '80%', maxWidth: 500}}>
-  <Form.Group className="mb-3" controlId="formBasicEmail">
-    <Form.Label>Email address</Form.Label>
-    <Form.Control type="email" placeholder="Enter email" />
-    <Form.Text className="text-muted">
-      We'll never share your email with anyone else.
-    </Form.Text>
-  </Form.Group>
+    <main className="flex-row justify-center mb-4">
+      <div className="col-12 col-md-6">
+        <div className="card">
+          <h4 className="card-header">Login</h4>
+          <div className="card-body">
+            <form onSubmit={handleFormSubmit}>
+              <input
+                className="form-input"
+                placeholder="Your email"
+                name="email"
+                type="email"
+                id="email"
+                value={formState.email}
+                onChange={handleChange}
+              />
+              <input
+                className="form-input"
+                placeholder="******"
+                name="password"
+                type="password"
+                id="password"
+                value={formState.password}
+                onChange={handleChange}
+              />
+              <button className="btn d-block w-100" type="submit">
+                Submit
+              </button>
+            </form>
 
-  <Form.Group className="mb-3" controlId="formBasicPassword">
-    <Form.Label>Password</Form.Label>
-    <Form.Control type="password" placeholder="Password" />
-  </Form.Group>
-  <Button variant="primary" type="submit">
-    Login
-  </Button>
-  <div className="py-4">
-    <p className="text-center">
-      Don't have an account? <Link to="/signup">Signup</Link>
-    </p>
-  </div>
-</Form>
-</Col>
-</Row>
-</Container>
-  )
-}
+            {error && <div>Login failed</div>}
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+};
 
-export default Login
+export default Login;

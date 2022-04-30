@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import Gadget from "./pages/Gadget";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Profile from "./pages/Profile";
 
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="/gadget" element={<Gadget />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       </BrowserRouter>
       </ApolloProvider>
