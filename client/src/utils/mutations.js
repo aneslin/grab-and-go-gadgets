@@ -28,3 +28,18 @@ mutation Mutation($username: String!, $email: String!, $password: String!) {
 `;
 
 
+export const RESERVE_ITEM = gql`
+mutation reserveItem($itemId: ID!, $dueDate: String!) {
+  reserveItem(itemId: $itemId, dueDate: $dueDate) {
+    _id
+    username
+    reservedItems {
+      _id
+      name
+    }
+    email
+    userType
+  }
+}`
+
+

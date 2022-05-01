@@ -19,3 +19,17 @@ export const QUERY_ME = gql`
     userType
   }
 }`
+
+
+export const QUERY_ITEMS = gql`
+query Items {
+  items {
+    _id
+    name
+    image
+    description
+    dueDate
+    itemStatus
+  }
+}
+`

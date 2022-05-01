@@ -1,6 +1,8 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 
+
+
 function Items(props) {
   const { _id, name, image, description, dueDate, itemStatus, page, token } =
     props;
@@ -16,6 +18,9 @@ function Items(props) {
     }
   };
   console.log(props);
+
+
+
 
   return (
     <div>
