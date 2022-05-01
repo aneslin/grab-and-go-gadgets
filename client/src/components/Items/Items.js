@@ -9,9 +9,9 @@ function Items(props) {
       return <Button variant="success">Check OUT</Button>;
     } else if (page === "admin" && itemStatus === "CHECKED_OUT") {
       return <Button variant="danger">Check In</Button>;
-    } else if (page === "gadgets" && token && itemStatus !== "RESERVED") {
+    } else if (page === "Gadgets" && token && itemStatus !== "RESERVED") {
       return <Button variant="primary">Reserve</Button>;
-    } else if (page === "gadgets" && itemStatus === "RESERVED") {
+    } else if (page === "Gadgets" && itemStatus === "RESERVED") {
       return (
         <Button variant="primary" disabled>
           Reserved

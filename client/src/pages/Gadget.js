@@ -4,6 +4,7 @@ import Items from '../components/Items/Items'
 import { QUERY_ITEMS } from '../utils/queries'
 import { Row, Col} from 'react-bootstrap'
 import {useQuery} from '@apollo/client'
+import Auth from "../utils/auth"
 function Gadget() {
  const {loading, data, error, refetch} = useQuery(QUERY_ITEMS)  
     const [pages] = useState([
@@ -12,7 +13,8 @@ function Gadget() {
         }
     ]);
     const [currentPage] = useState(pages[0]);
-console.log(data)
+console.log(currentPage)
+const token = Auth.loggedIn() ? Auth.getToken() : null;
     return (
 
         
@@ -39,8 +41,8 @@ console.log(data)
                 {" "}
                 <Items
                  
-                  
-                  
+                  page = {currentPage.name}
+                  token = {token}
                   _id={_id}
                   name={name}
                   image={image}
