@@ -18,6 +18,7 @@ const resolvers = {
     //get currently logged in user
     me: async (parent, args, context) => {
       if (context.user) {
+        console.log("calling me")
         const userData = await User.findOne({ _id: context.user._id }).populate(
           "reservedItems"
         );
@@ -82,7 +83,7 @@ const resolvers = {
       if (context.user) {
         const item = await Item.findOneAndUpdate(
           { _id: itemId },
-          { itemStatus: itemStatus, dueDate: dueDate },
+          { itemStatus: "RESERVED", dueDate: dueDate  },
           { new: true }
         );
         console.log(item);
