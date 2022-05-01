@@ -1,24 +1,39 @@
-import React, {useState} from "react";
-import { useMutation } from '@apollo/client';
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
 import { Card, Button } from "react-bootstrap";
-import {RESERVE_ITEM} from '../../utils/mutations'
+import { RESERVE_ITEM } from "../../utils/mutations";
+import Auth from "../../utils/auth";
+
 function Items(props) {
-  const [ item, setItem] = useState(props)
-  const [reserveItem, {data, error}] = useMutation(RESERVE_ITEM)
+  const { _id, name, image, description, dueDate, itemStatus, page } = props;
+  const [reserveItem] = useMutation(RESERVE_ITEM);
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-  const { _id, name, image, description, dueDate, itemStatus, page, token } =
-    item;
+  const currentItem = {
+    _id: _id,
+    name: name,
+    image: image,
+    description: description,
+    dueDate: dueDate,
+    itemStatus: itemStatus,
+  };
+  const [item, setItem] = useState(currentItem);
 
-const handleReserve = async (id) => {
-  console.log(id)
-  const data = await reserveItem({
-    variables:{_id:id, dueDate:"TODAY"}
-    
-  })
-console.log(data)
- 
-}
+  const handleReserve = async (id) => {
+    try {
+      console.log(id);
+      const data = await reserveItem({
+        variables: { itemId: id, dueDate: "TODAY" },
+      });
 
+      const updatedItem = await { data };
+
+      console.log(updatedItem);
+      setItem(updatedItem.data.data.reserveItem);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const findPage = function (page, token, itemStatus, _id) {
     if (page === "admin" && itemStatus === "RESERVED") {
@@ -26,7 +41,11 @@ console.log(data)
     } else if (page === "admin" && itemStatus === "CHECKED_OUT") {
       return <Button variant="danger">Check In</Button>;
     } else if (page === "Gadgets" && token && itemStatus !== "RESERVED") {
-      return <Button variant="primary" onClick={()=>handleReserve(_id)}>Reserve</Button>;
+      return (
+        <Button variant="primary" onClick={() => handleReserve(_id)}>
+          Reserve
+        </Button>
+      );
     } else if (page === "Gadgets" && itemStatus === "RESERVED") {
       return (
         <Button variant="primary" disabled>
@@ -34,25 +53,28 @@ console.log(data)
         </Button>
       );
     } else {
-      return <></>
+      return <></>;
     }
   };
 
   return (
     <div>
-      <Card key={_id} style={{ width: "24rem" }} className='m-1'>
+      <Card key={_id} style={{ width: "24rem" }} className="m-1">
         {image ? (
-          <Card.Img src={'https://placekitten.com/150/150'} alt={`image of ${name}`} />
+          <Card.Img
+            src={"https://placekitten.com/150/150"}
+            alt={`image of ${name}`}
+          />
         ) : (
           <p>image not found</p>
         )}
-        <Card.Title>{name}</Card.Title>
-        <Card.Text>{description}</Card.Text>
+        <Card.Title>{item.name}</Card.Title>
+        <Card.Text>{item.description}</Card.Text>
         <Card.Text>
-          <span>{itemStatus}</span>
+          <span>{item.itemStatus}</span>
         </Card.Text>
-        <Card.Text>{dueDate}</Card.Text>
-        {findPage(page, token, itemStatus, _id)}
+        <Card.Text>{item.dueDate}</Card.Text>
+        {findPage(page, token, item.itemStatus, item._id)}
       </Card>
     </div>
   );
