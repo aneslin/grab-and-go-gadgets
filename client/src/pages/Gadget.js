@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { capitalizeFirstLetter } from '../utils/helpers';
-
+import Items from '../components/Items/Items'
+import { QUERY_ITEMS } from '../utils/queries'
 function Gadget() {
+
     const [pages] = useState([
         {
             name: "Gadgets"
