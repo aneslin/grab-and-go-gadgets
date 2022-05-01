@@ -1,32 +1,32 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 
-
-
 function Items(props) {
   const { _id, name, image, description, dueDate, itemStatus, page, token } =
     props;
   const findPage = function (page, token, itemStatus) {
     if (page === "admin" && itemStatus === "RESERVED") {
-      return <Button>Check OUT</Button>;
+      return <Button variant="success">Check OUT</Button>;
     } else if (page === "admin" && itemStatus === "CHECKED_OUT") {
-      return <Button>Check In</Button>;
+      return <Button variant="danger">Check In</Button>;
     } else if (page === "gadgets" && token && itemStatus !== "RESERVED") {
-      return <Button>Reserve</Button>;
+      return <Button variant="primary">Reserve</Button>;
+    } else if (page === "gadgets" && itemStatus === "RESERVED") {
+      return (
+        <Button variant="primary" disabled>
+          Reserved
+        </Button>
+      );
     } else {
-      <></>;
+      return <></>
     }
   };
-  console.log(props);
-
-
-
 
   return (
     <div>
-      <Card key={_id} style={{ width: "24rem" }}>
+      <Card key={_id} style={{ width: "24rem" }} className='m-1'>
         {image ? (
-          <Card.Img src={image} alt={`image of ${name}`} />
+          <Card.Img src={'https://placekitten.com/150/150'} alt={`image of ${name}`} />
         ) : (
           <p>image not found</p>
         )}
