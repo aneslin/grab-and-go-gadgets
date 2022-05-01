@@ -26,7 +26,8 @@ const Profile = () => {
       </React.Fragment>
     );
   const token = Auth.loggedIn() ? Auth.getToken() : null;
-
+  let reserved = data.me.reservedItems.filter((item) => item.itemStatus === "RESERVED")
+  let checkedOut = data.me.reservedItems.filter((item) => item.itemStatus === "CHECKE+OUT")
   console.log(data);
 
   return (
@@ -36,12 +37,18 @@ const Profile = () => {
         <div>
         <h3>My info</h3>
     <div >
-        <Stack gap={1} className='bg-light border my-2 ' style={ {width: "24rem" }}>
+        <Stack className='bg-light border my-2 ' style={ {width: "24rem" }}>
           <div>
             <span>Username</span>: {data.me.username}
           </div>
           <div>
             <span>Email</span>: {data.me.email}
+          </div>
+          <div>
+            You have {reserved.length} reserved Items
+          </div>
+          <div>
+            You have {checkedOut.length} Checked Out Items
           </div>
           {data.me.userType === "ADMIN" ? (
             <div>Admin Status: You are admin!!</div>
@@ -65,9 +72,10 @@ const Profile = () => {
             let { _id, name, image, description, itemStatus, dueDate } = item;
 
             return (
-              <Col>
+              <Col key = {_id}>
                 {" "}
                 <Items
+                 
                   page={page}
                   token={token}
                   _id={_id}
