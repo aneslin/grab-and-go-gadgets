@@ -1,16 +1,32 @@
-import React from "react";
+import React, {useState} from "react";
+import { useMutation } from '@apollo/client';
 import { Card, Button } from "react-bootstrap";
-
+import {RESERVE_ITEM} from '../../utils/mutations'
 function Items(props) {
+  const [ item, setItem] = useState(props)
+  const [reserveItem, {data, error}] = useMutation(RESERVE_ITEM)
+
   const { _id, name, image, description, dueDate, itemStatus, page, token } =
-    props;
-  const findPage = function (page, token, itemStatus) {
+    item;
+
+const handleReserve = async (id) => {
+  console.log(id)
+  const data = await reserveItem({
+    variables:{_id:id, dueDate:"TODAY"}
+    
+  })
+console.log(data)
+ 
+}
+
+
+  const findPage = function (page, token, itemStatus, _id) {
     if (page === "admin" && itemStatus === "RESERVED") {
       return <Button variant="success">Check OUT</Button>;
     } else if (page === "admin" && itemStatus === "CHECKED_OUT") {
       return <Button variant="danger">Check In</Button>;
     } else if (page === "Gadgets" && token && itemStatus !== "RESERVED") {
-      return <Button variant="primary">Reserve</Button>;
+      return <Button variant="primary" onClick={()=>handleReserve(_id)}>Reserve</Button>;
     } else if (page === "Gadgets" && itemStatus === "RESERVED") {
       return (
         <Button variant="primary" disabled>
@@ -36,7 +52,7 @@ function Items(props) {
           <span>{itemStatus}</span>
         </Card.Text>
         <Card.Text>{dueDate}</Card.Text>
-        {findPage(page, token, itemStatus)}
+        {findPage(page, token, itemStatus, _id)}
       </Card>
     </div>
   );
