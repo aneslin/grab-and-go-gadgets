@@ -87,11 +87,13 @@ const resolvers = {
           { new: true }
         );
         console.log(item);
-        return User.findByIdAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { reservedItems: item._id } },
-          { new: true }
-        ).populate("reservedItems");
+
+          return item
+       // return User.findByIdAndUpdate(
+         // { _id: context.user._id },
+         // { $addToSet: { reservedItems: item._id } },
+         // { new: true }
+       // ).populate("reservedItems"); 
       }
       throw new AuthenticationError("you need to be logged in");
     },

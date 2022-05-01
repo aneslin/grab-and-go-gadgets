@@ -65,7 +65,7 @@ enum itemStatus{
       createUser(username:String!, email:String!, password:String!, userType: UserType): Auth
       createItem(name:String!, image:String!, description:String) : Item
       reserveOtherItem(itemId:ID!, userId:ID! itemStatus:itemStatus dueDate:String!): User
-      reserveItem(itemId:ID!, itemStatus:itemStatus dueDate:String!): User
+      reserveItem(itemId:ID!, itemStatus:itemStatus dueDate:String!): Item
       alterUser(userId:ID!, userType: UserType!):User
       returnItem(itemId:ID!, userId:ID!):User
 
