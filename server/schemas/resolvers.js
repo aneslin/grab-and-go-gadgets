@@ -18,7 +18,7 @@ const resolvers = {
     //get currently logged in user
     me: async (parent, args, context) => {
       if (context.user) {
-        console.log("calling me")
+        console.log("calling me");
         const userData = await User.findOne({ _id: context.user._id }).populate(
           "reservedItems"
         );
@@ -47,6 +47,15 @@ const resolvers = {
   },
 
   Mutation: {
+
+    cleanUser: async (parent, { username }) => {
+      const updatedUser = await User.findOneAndUpdate(
+        { username: username },
+        { $unset: { reservedItems: "" } },
+        { new: true }
+      );
+    },
+
     //create a new user
     createUser: async (parent, args) => {
       const user = await User.create(args);
@@ -81,19 +90,18 @@ const resolvers = {
     //set and item due, date, change status and add to item array FOR SELF
     reserveItem: async (parent, { itemId, itemStatus, dueDate }, context) => {
       if (context.user) {
-        const item = await Item.findOneAndUpdate(
+        item =  await Item.findOneAndUpdate(
           { _id: itemId },
-          { itemStatus: "RESERVED", dueDate: dueDate  },
+          { itemStatus: "RESERVED", dueDate: dueDate },
           { new: true }
         );
-        console.log(item);
-
-          return item
-       // return User.findByIdAndUpdate(
-         // { _id: context.user._id },
-         // { $addToSet: { reservedItems: item._id } },
-         // { new: true }
-       // ).populate("reservedItems"); 
+          console.log(item)
+        const user = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { reservedItems: item._id } }
+        );
+        
+        return item;
       }
       throw new AuthenticationError("you need to be logged in");
     },
@@ -122,8 +130,7 @@ const resolvers = {
       if (context.user.userType === "ADMIN") {
         const item = await Item.findOneAndUpdate(
           { _id: itemId },
-          { itemStatus: "AVAILABLE", dueDate: null },
-         
+          { itemStatus: "AVAILABLE", dueDate: null }
         );
         return User.findByIdAndUpdate(
           { _id: userId },
