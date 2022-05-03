@@ -50,4 +50,13 @@ mutation createItem($name: String!, $image: String!, $description: String) {
 }
 `
 
+export const ALTER_USER = gql`
+mutation alterUser($username: String!, $userType: UserType!) {
+  alterUser(username: $username, userType: $userType) {
+    username
+    userType
+  }
+}
+`
+
 
