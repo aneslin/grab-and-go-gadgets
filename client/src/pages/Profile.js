@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import Auth from "../utils/auth";
 import { QUERY_ME } from "../utils/queries";
@@ -16,6 +16,20 @@ import {
 const Profile = () => {
   const page = "profile";
   const { loading, data, error, refetch } = useQuery(QUERY_ME);
+
+ 
+  
+  useEffect(()=>{
+    async function fetchAPI() {
+      const callQuery = async () => {
+        refetch().then((response) => {
+          console.log(response)
+        })
+      }
+      await callQuery();
+    }
+    fetchAPI()
+  },[])
   if (loading) return <p>loading data</p>;
   if (error)
     return (
@@ -25,6 +39,7 @@ const Profile = () => {
         <button onClick={() => refetch()}>Please try again!</button>
       </React.Fragment>
     );
+    console.log(data.me.reservedItems)
   const token = Auth.loggedIn() ? Auth.getToken() : null;
   let reserved = data.me.reservedItems.filter(
     (item) => item.itemStatus === "RESERVED"

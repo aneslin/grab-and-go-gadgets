@@ -25,7 +25,7 @@ function Items(props) {
       const data = await reserveItem({
         variables: { itemId: id, dueDate: "TODAY" },
       });
-
+      console.log("====>", data)
       const updatedItem = await { data };
 
       console.log(updatedItem);
