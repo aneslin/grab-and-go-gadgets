@@ -55,8 +55,9 @@ const resolvers = {
           { new: true }
         );
         return updatedUser;
-      } 
-      ,
+    
+      
+    },
 
     cleanUser: async (parent, { username }) => {
       const updatedUser = await User.findOneAndUpdate(

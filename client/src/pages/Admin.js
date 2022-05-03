@@ -4,11 +4,18 @@ import { useMutation } from "@apollo/client";
 import { CREATE_ITEM, ALTER_USER } from "../utils/mutations";
 
 const Admin = () => {
-  const [itemFormData, setItemFormData] = useState({name:'', image:'', description:''});
+  const [itemFormData, setItemFormData] = useState({
+    name: "",
+    image: "",
+    description: "",
+  });
   const [createItem, { errorI }] = useMutation(CREATE_ITEM);
-  const [ userFormData, setUserFormData] = useState({username:'', userType:''})
-  const [alterUser, {errorU}] = useMutation(ALTER_USER)
-
+  const [userFormData, setUserFormData] = useState({
+    username: "billybob",
+    userType: "CLIENT",
+  });
+  const [alterUser, { errorU }] = useMutation(ALTER_USER);
+//alter user
   const handleUserChange = (event) => {
     const { name, value } = event.target;
 
@@ -19,19 +26,18 @@ const Admin = () => {
   };
 
   const handleAlterUserSubmit = async (event) => {
-    event.preventDefault()
-    const {data} = await alterUser({
-      variable: { ... itemFormData}
-    })
-    console.log(data)
+    event.preventDefault();
+    const { data } = await alterUser({
+      variables: { ...userFormData },
+    });
+    console.log(data);
 
     setUserFormData({
-      username:'',
-      userType:''
-
-    })
-  }
-  
+      username: "",
+      userType: "",
+    });
+  };
+//item form
   const handleItemChange = (event) => {
     const { name, value } = event.target;
 
@@ -41,93 +47,94 @@ const Admin = () => {
     });
   };
 
-
   const handleItemFormSubmit = async (event) => {
     event.preventDefault();
 
-    
-      const { data } = await createItem({
-        variables: { ...itemFormData },
-      });
-  
-   console.log(data)
-  
+    const { data } = await createItem({
+      variables: { ...itemFormData },
+    });
+
+    console.log(data);
+
     // clear form values
     setItemFormData({
-      name: '',
-      image: '',
-      description:''
+      name: "",
+      image: "",
+      description: "",
     });
-  }
+  };
   return (
     <div>
       <div>Admin</div>
       <main className="flex-row justify-center mb-4 form-body">
-      <div className="col-12 col-md-10">
-        <div className="card">
-          <h4 className="card-header">New Image</h4>
-          <div className="card-body">
-            <form onSubmit={handleItemFormSubmit}>
-              <input
-                className="form-input"
-                placeholder="name"
-                name="name"
-                type="text"
-                id="name"
-                value={itemFormData.name}
-                onChange={handleItemChange}
-              />
-              <input
-                className="form-input"
-                placeholder="KITTEN!"
-                name="image"
-                type="text"
-                id="image"
-                value={itemFormData.image}
-                onChange={handleItemChange}
-              />
-               <input
-                className="form-input"
-                placeholder="description"
-                name="description"
-                type="text"
-                id="description"
-                value={itemFormData.description}
-                onChange={handleItemChange}
-              />
-              <button className="btn d-block w-100" type="submit">
-                Submit
-              </button>
-            </form>
+        <div className="col-12 col-md-10">
+          <div className="card">
+            <h4 className="card-header">New Image</h4>
+            <div className="card-body">
+              <form onSubmit={handleItemFormSubmit}>
+                <input
+                  className="form-input"
+                  placeholder="name"
+                  name="name"
+                  type="text"
+                  id="name"
+                  value={itemFormData.name}
+                  onChange={handleItemChange}
+                />
+                <input
+                  className="form-input"
+                  placeholder="KITTEN!"
+                  name="image"
+                  type="text"
+                  id="image"
+                  value={itemFormData.image}
+                  onChange={handleItemChange}
+                />
+                <input
+                  className="form-input"
+                  placeholder="description"
+                  name="description"
+                  type="text"
+                  id="description"
+                  value={itemFormData.description}
+                  onChange={handleItemChange}
+                />
+                <button className="btn d-block w-100" type="submit">
+                  Submit
+                </button>
+              </form>
 
-            {errorI && <div>Item Creation Failed</div>}
+              {errorI && <div>Item Creation Failed</div>}
+            </div>
           </div>
         </div>
-      </div>
-    </main>
-        <div>
+      </main>
+      <div>
         <form onSubmit={handleAlterUserSubmit}>
-              <input
-                className="form-input"
-                placeholder="userName"
-                name="username"
-                type="text"
-                id="username"
-                value={userFormData.username}
-                onChange={handleUserChange}
-              />
-              <input
-                className="form-input"
-                placeholder="User Type"
-                name="userType"
-                type="text"
-                id="userType"
-                value={itemFormData.image}
-                onChange={handleUserChange}
-              />
-              </form>
-              {errorU && <div>Alter User Failed</div>}
-        </div>
+          <input
+            className="form-input"
+            placeholder="userName"
+            name="username"
+            type="text"
+            id="username"
+            value={userFormData.username}
+            onChange={handleUserChange}
+          />
+          <input
+            className="form-input"
+            placeholder="User Type"
+            name="userType"
+            type="text"
+            id="userType"
+            value={userFormData.userType}
+            onChange={handleUserChange}
+          />
+          <button className="btn d-block w-100" type="submit">
+            Submit
+          </button>
+        </form>
+        {errorU && <div>Alter User Failed</div>}
+      </div>
     </div>
   );
 };
