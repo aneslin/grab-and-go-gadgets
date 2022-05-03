@@ -33,3 +33,22 @@ query Items {
   }
 }
 `
+
+export const QUERY_USERS = gql`
+query Users {
+  users {
+    _id
+    username
+    email
+    reservedItems {
+      image
+      _id
+      name
+      description
+      dueDate
+      itemStatus
+    }
+    userType
+  }
+}
+`

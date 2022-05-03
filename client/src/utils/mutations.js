@@ -40,4 +40,14 @@ mutation reserveItem($itemId: ID!, $dueDate: String!) {
   }
 }`
 
+export const CREATE_ITEM = gql`
+mutation createItem($name: String!, $image: String!, $description: String) {
+  createItem(name: $name, image: $image, description: $description) {
+    name
+    image
+    description
+  }
+}
+`
+
 
