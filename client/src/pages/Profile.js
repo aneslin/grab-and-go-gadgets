@@ -29,7 +29,7 @@ const Profile = () => {
       await callQuery();
     }
     fetchAPI()
-  },[])
+  })
   if (loading) return <p>loading data</p>;
   if (error)
     return (
