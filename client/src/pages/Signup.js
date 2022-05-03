@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
-import {Row, Col, Container, Button, Form} from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import "./Login.css"
 
 import Auth from '../utils/auth';
 
@@ -10,6 +11,7 @@ const Signup = () => {
     username: '',
     email: '',
     password: '',
+    userType: '',
   });
   const [createUser, { error }] = useMutation(ADD_USER);
 
@@ -39,10 +41,7 @@ const Signup = () => {
   };
 
   return (
-    <Container>
-      <Row>
-      <Col md={7} className="d-flex align-items-center justify-content-center flex-direction-column">
-    <main className="flex-row justify-center mb-4">
+    <main className="flex-row justify-center mb-4 form-body">
       <div className="col-12 col-md-6">
         <div className="card">
           <h4 className="card-header">Sign Up</h4>
@@ -75,6 +74,7 @@ const Signup = () => {
                 value={formState.password}
                 onChange={handleChange}
               />
+
               <button className="btn d-block w-100" type="submit">
                 Submit
               </button>
@@ -85,9 +85,7 @@ const Signup = () => {
         </div>
       </div>
     </main>
-    </Col>
-    </Row>
-    </Container>
+
   );
 };
 
