@@ -1,13 +1,44 @@
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
-import { CREATE_ITEM } from "../utils/mutations";
+import { CREATE_ITEM, ALTER_USER } from "../utils/mutations";
 
 const Admin = () => {
-  const [itemFormData, setItemFormData] = useState({name:'', image:'', description:''});
-  const [createItem, { error }] = useMutation(CREATE_ITEM);
+  const [itemFormData, setItemFormData] = useState({
+    name: "",
+    image: "",
+    description: "",
+  });
+  const [createItem, { errorI }] = useMutation(CREATE_ITEM);
+  const [userFormData, setUserFormData] = useState({
+    username: "",
+    userType: "",
+  });
+  const [alterUser, { errorU }] = useMutation(ALTER_USER);
+//alter user
+  const handleUserChange = (event) => {
+    const { name, value } = event.target;
 
-  const handleChange = (event) => {
+    setUserFormData({
+      ...userFormData,
+      [name]: value,
+    });
+  };
+
+  const handleAlterUserSubmit = async (event) => {
+    event.preventDefault();
+    const { data } = await alterUser({
+      variables: { ...userFormData },
+    });
+    console.log(data);
+
+    setUserFormData({
+      username: "",
+      userType: "",
+    });
+  };
+//item form
+  const handleItemChange = (event) => {
     const { name, value } = event.target;
 
     setItemFormData({
@@ -16,71 +47,94 @@ const Admin = () => {
     });
   };
 
-
-  const handleFormSubmit = async (event) => {
+  const handleItemFormSubmit = async (event) => {
     event.preventDefault();
 
-    
-      const { data } = await createItem({
-        variables: { ...itemFormData },
-      });
-  
-   console.log(data)
-  
+    const { data } = await createItem({
+      variables: { ...itemFormData },
+    });
+
+    console.log(data);
+
     // clear form values
     setItemFormData({
-      name: '',
-      image: '',
-      description:''
+      name: "",
+      image: "",
+      description: "",
     });
-  }
+  };
   return (
     <div>
       <div>Admin</div>
       <main className="flex-row justify-center mb-4 form-body">
-      <div className="col-12 col-md-10">
-        <div className="card">
-          <h4 className="card-header">New Image</h4>
-          <div className="card-body">
-            <form onSubmit={handleFormSubmit}>
-              <input
-                className="form-input"
-                placeholder="name"
-                name="name"
-                type="text"
-                id="name"
-                value={itemFormData.name}
-                onChange={handleChange}
-              />
-              <input
-                className="form-input"
-                placeholder="KITTEN!"
-                name="image"
-                type="text"
-                id="image"
-                value={itemFormData.image}
-                onChange={handleChange}
-              />
-               <input
-                className="form-input"
-                placeholder="description"
-                name="description"
-                type="text"
-                id="description"
-                value={itemFormData.description}
-                onChange={handleChange}
-              />
-              <button className="btn d-block w-100" type="submit">
-                Submit
-              </button>
-            </form>
+        <div className="col-12 col-md-10">
+          <div className="card">
+            <h4 className="card-header">New Image</h4>
+            <div className="card-body">
+              <form onSubmit={handleItemFormSubmit}>
+                <input
+                  className="form-input"
+                  placeholder="name"
+                  name="name"
+                  type="text"
+                  id="name"
+                  value={itemFormData.name}
+                  onChange={handleItemChange}
+                />
+                <input
+                  className="form-input"
+                  placeholder="KITTEN!"
+                  name="image"
+                  type="text"
+                  id="image"
+                  value={itemFormData.image}
+                  onChange={handleItemChange}
+                />
+                <input
+                  className="form-input"
+                  placeholder="description"
+                  name="description"
+                  type="text"
+                  id="description"
+                  value={itemFormData.description}
+                  onChange={handleItemChange}
+                />
+                <button className="btn d-block w-100" type="submit">
+                  Submit
+                </button>
+              </form>
 
-            {error && <div>Login failed</div>}
+              {errorI && <div>Item Creation Failed</div>}
+            </div>
           </div>
         </div>
+      </main>
+      <div>
+        <form onSubmit={handleAlterUserSubmit}>
+          <input
+            className="form-input"
+            placeholder="userName"
+            name="username"
+            type="text"
+            id="username"
+            value={userFormData.username}
+            onChange={handleUserChange}
+          />
+          <input
+            className="form-input"
+            placeholder="User Type"
+            name="userType"
+            type="text"
+            id="userType"
+            value={userFormData.userType}
+            onChange={handleUserChange}
+          />
+          <button className="btn d-block w-100" type="submit">
+            Submit
+          </button>
+        </form>
+        {errorU && <div>Alter User Failed</div>}
       </div>
-    </main>
-        
     </div>
   );
 };

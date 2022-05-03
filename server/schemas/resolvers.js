@@ -47,6 +47,17 @@ const resolvers = {
   },
 
   Mutation: {
+    alterUser: async (parent, { username, userType }) => {
+      
+        const updatedUser = await User.findOneAndUpdate(
+          { username: username },
+          { userType: userType },
+          { new: true }
+        );
+        return updatedUser;
+    
+      
+    },
 
     cleanUser: async (parent, { username }) => {
       const updatedUser = await User.findOneAndUpdate(
@@ -79,33 +90,29 @@ const resolvers = {
       return { user, token };
     },
     //create a new item
-    createItem: async (parent, {name, image, description}, context) => {
-      console.log(context.user)
-      
-       
-        return item =  Item.create(
-          {name:name,
-          image:image,
-          description:description
-          }
-        );
-        
-     
+    createItem: async (parent, { name, image, description }, context) => {
+      console.log(context.user);
+
+      return (item = Item.create({
+        name: name,
+        image: image,
+        description: description,
+      }));
     },
     //set and item due, date, change status and add to item array FOR SELF
     reserveItem: async (parent, { itemId, itemStatus, dueDate }, context) => {
       if (context.user) {
-        item =  await Item.findOneAndUpdate(
+        item = await Item.findOneAndUpdate(
           { _id: itemId },
           { itemStatus: "RESERVED", dueDate: dueDate },
           { new: true }
         );
-          console.log(item)
+        console.log(item);
         const user = await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $addToSet: { reservedItems: item._id } }
         );
-        
+
         return item;
       }
       throw new AuthenticationError("you need to be logged in");
