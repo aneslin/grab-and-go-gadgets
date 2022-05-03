@@ -11,8 +11,8 @@ const Admin = () => {
   });
   const [createItem, { errorI }] = useMutation(CREATE_ITEM);
   const [userFormData, setUserFormData] = useState({
-    username: "billybob",
-    userType: "CLIENT",
+    username: "",
+    userType: "",
   });
   const [alterUser, { errorU }] = useMutation(ALTER_USER);
 //alter user
