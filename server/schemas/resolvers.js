@@ -79,13 +79,18 @@ const resolvers = {
       return { user, token };
     },
     //create a new item
-    createItem: async (parent, args, context) => {
-      if (context.user.userType === "ADMIN") {
-        console.log(args);
-        const item = await Item.create(args);
-        return { item };
-      }
-      throw new AuthenticationError("invalid permissions");
+    createItem: async (parent, {name, image, description}, context) => {
+      console.log(context.user)
+      
+       
+        return item =  Item.create(
+          {name:name,
+          image:image,
+          description:description
+          }
+        );
+        
+     
     },
     //set and item due, date, change status and add to item array FOR SELF
     reserveItem: async (parent, { itemId, itemStatus, dueDate }, context) => {
