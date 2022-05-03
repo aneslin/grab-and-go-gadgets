@@ -8,6 +8,7 @@ import Gadget from "./pages/Gadget";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
+import Donate from "./pages/Donate";
 
 import {
   ApolloProvider,
@@ -49,6 +50,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/donate" element={<Donate />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
