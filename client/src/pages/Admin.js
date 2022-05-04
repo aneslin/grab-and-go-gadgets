@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Card } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
-import { CREATE_ITEM, ALTER_USER, RESERVE_ITEM } from "../utils/mutations";
+import { CREATE_ITEM, ALTER_USER, RETURN_ITEM } from "../utils/mutations";
 
 const Admin = () => {
-  const [returnItemForm, setReturnItemForm] = useState("")
+  const [returnItemForm, setReturnItemForm] = useState(
+    { username:'', itemId:''}
+  )
   const [itemFormData, setItemFormData] = useState({
     name: "",
     image: "",
@@ -16,7 +18,32 @@ const Admin = () => {
     userType: "",
   });
   const [alterUser, { errorU }] = useMutation(ALTER_USER);
-//alter user
+  const[ returnItem, {errorR}] = useMutation(RETURN_ITEM)
+//return item
+const handleReturnChange = (event) => {
+  const { name, value } = event.target;
+
+  setReturnItemForm({
+    ...returnItemForm,
+    [name]: value,
+  });
+};
+
+const handleReturnSubmit = async (event) => {
+  event.preventDefault();
+  const { data } = await returnItem({
+    variables: { ...returnItemForm },
+  });
+  console.log(data);
+
+  setReturnItemForm({
+    username: "",
+    itemId: "",
+  });
+};
+
+
+  //alter user
   const handleUserChange = (event) => {
     const { name, value } = event.target;
 
@@ -72,6 +99,7 @@ const Admin = () => {
           <div className="card">
             <h4 className="card-header">New Image</h4>
             <div className="card-body">
+              
               <form onSubmit={handleItemFormSubmit}>
                 <input
                   className="form-input"
@@ -109,8 +137,10 @@ const Admin = () => {
             </div>
           </div>
         </div>
-      </main>
+      
       <div>
+        <Card>
+       <Card.Title> <h4>Promote user</h4></Card.Title>
         <form onSubmit={handleAlterUserSubmit}>
           <input
             className="form-input"
@@ -130,13 +160,43 @@ const Admin = () => {
             value={userFormData.userType}
             onChange={handleUserChange}
           />
-          <button className="btn d-block w-100" type="submit">
+          <Button variant = 'danger' type="submit">
             Submit
-          </button>
+          </Button>
+        </form>
+        {errorU && <div>Alter User Failed</div>}
+        </Card>
+      </div>
+      <div>
+        <h4>Return Item</h4>
+        <form onSubmit={handleReturnSubmit}>
+          <input
+            className="form-input"
+            placeholder="userName"
+            name="username"
+            type="text"
+            id="username"
+            value={returnItemForm.username}
+            onChange={handleReturnChange}
+          />
+          <input
+            className="form-input"
+            placeholder="itemId"
+            name="itemId"
+            type="text"
+            id="ItemId"
+            value={returnItemForm.itemId}
+            onChange={handleReturnChange}
+          />
+          <Button variant="danger" type="submit">
+            Submit
+          </Button>
         </form>
         {errorU && <div>Alter User Failed</div>}
       </div>
+      </main>
     </div>
+    
   );
 };
 

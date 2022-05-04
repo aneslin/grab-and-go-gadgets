@@ -14,6 +14,7 @@ function Gadget() {
     ]);
     const [currentPage] = useState(pages[0]);
 console.log(currentPage)
+console.log(data)
 const token = Auth.loggedIn() ? Auth.getToken() : null;
     return (
 

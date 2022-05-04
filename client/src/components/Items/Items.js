@@ -73,8 +73,8 @@ function Items(props) {
         <Card.Text>
           <span>{item.itemStatus}</span>
         </Card.Text>
-        <Card.Text>{item.dueDate}</Card.Text>
-        {findPage(page, token, item.itemStatus, item._id)}
+     
+      <Card.Footer>{findPage(page, token, item.itemStatus, item._id)}</Card.Footer> 
       </Card>
     </div>
   );
