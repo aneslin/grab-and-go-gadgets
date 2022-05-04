@@ -24,3 +24,6 @@ An app for managing equipment lending.  An admin user may create new items.  A c
 * MongoDB and Mongoose ORM
 * Responsive design
 * Users can authenticate
+
+
+
