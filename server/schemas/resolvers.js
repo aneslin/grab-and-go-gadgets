@@ -138,14 +138,14 @@ const resolvers = {
       }
       throw new AuthenticationError("you need to be logged in");
     },
-    returnItem: async (parent, { userId, itemId }, context) => {
+    returnItem: async (parent, { username, itemId }, context) => {
       if (context.user.userType === "ADMIN") {
         const item = await Item.findOneAndUpdate(
           { _id: itemId },
           { itemStatus: "AVAILABLE", dueDate: null }
         );
-        return User.findByIdAndUpdate(
-          { _id: userId },
+        return User.findOneAndUpdate(
+          { username: username },
           { $pull: { reservedItems: item._id } },
           { new: true }
         ).populate("reservedItems");
