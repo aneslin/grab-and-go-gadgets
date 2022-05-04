@@ -4,6 +4,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Link, Routes, Route, Navigate } from "react-router-dom";
 import Auth from "../utils/auth";
 import logo from "../assets/logo1.jpg";
+import "./Navigation.css";
 
 const Navigation = () => {
   const logout = (event) => {
@@ -23,7 +24,28 @@ const Navigation = () => {
             <Routes>
               <Route path="/" element={<Navigate to="/gadget" />}></Route>
             </Routes>
-            <Link to="/profile">Me</Link>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Nav className="mr-auto">
+                <LinkContainer to="/profile">
+                  <Nav.Link>User</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/gadget">
+                  <Nav.Link>Gadgets</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/about">
+                  <Nav.Link>About us</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/contact">
+                  <Nav.Link>Contact Us</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/logout">
+                  <Nav.Link onClick={logout}>Logout</Nav.Link>
+                </LinkContainer>
+                <Button> 
+              <Link className="text-white"to="/donate">Donate </Link>
+              </Button>
+              </Nav>
+            {/* <Link to="/profile">Me</Link>
             <Link to="/gadget">Gadgets</Link>
             <Link to="/about">About us</Link>
             <Link to="/contact">Contact</Link>
@@ -32,13 +54,12 @@ const Navigation = () => {
             </a>
             <Button> 
               <Link className="text-white"to="/donate">Donate </Link>
-              </Button>
+              </Button> */}
           </>
         ) : (
           <>
             <Navbar.Brand href="/gadget">Gadgets-To-Go</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
                 <LinkContainer to="/login">
                   <Nav.Link >Login</Nav.Link>
@@ -53,7 +74,6 @@ const Navigation = () => {
                   <Nav.Link>Contact Us</Nav.Link>
                 </LinkContainer>
               </Nav>
-            </Navbar.Collapse>
             <br />
           </>
         )}

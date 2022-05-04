@@ -20,7 +20,10 @@ function About() {
                         <h1>{capitalizeFirstLetter(currentPage.name)}</h1>
                         <hr />
                         <p className="text-faded mb-5">
-                          lorum ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                            {/* write a paragraph about gadget to go */}
+                            Gaget-To-Go is a web application that allows users to reserve Gadgets from a list of items.
+
+
                         </p>
                     
                         <a className="btn btn-primary btn-xl js-scroll-trigger" href="/gadget">Check Out our Gadgets</a>
