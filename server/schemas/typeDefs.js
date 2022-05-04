@@ -67,7 +67,7 @@ enum itemStatus{
       reserveOtherItem(itemId:ID!, userId:ID! itemStatus:itemStatus dueDate:String!): User
       reserveItem(itemId:ID!, itemStatus:itemStatus dueDate:String!): Item
       alterUser(username:String!, userType: UserType!):User
-      returnItem(itemId:ID!, userId:ID!):User
+      returnItem(itemId:ID!, username:String!):User
       cleanUser(username: String!):User
   }
 

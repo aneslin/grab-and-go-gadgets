@@ -59,8 +59,8 @@ mutation alterUser($username: String!, $userType: UserType!) {
 }
 `
 export const RETURN_ITEM = gql`
-mutation ReturnItem($itemId: ID!, $userId: ID!) {
-  returnItem(itemId: $itemId, userId: $userId) {
+mutation ReturnItem($itemId: ID!, $username: String!) {
+  returnItem(itemId: $itemId, username: $username) {
   
     username
     reservedItems {
