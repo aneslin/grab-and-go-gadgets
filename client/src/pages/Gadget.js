@@ -38,6 +38,7 @@ const token = Auth.loggedIn() ? Auth.getToken() : null;
             let { _id, name, image, description, itemStatus, dueDate } = item;
 
             return (
+              
               <Col key = {_id}>
                 {" "}
                 <Items

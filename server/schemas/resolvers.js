@@ -99,6 +99,8 @@ const resolvers = {
         description: description,
       }));
     },
+
+    
     //set and item due, date, change status and add to item array FOR SELF
     reserveItem: async (parent, { itemId, itemStatus, dueDate }, context) => {
       if (context.user) {

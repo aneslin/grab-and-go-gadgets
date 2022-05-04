@@ -9,6 +9,7 @@ import iphone from "../../assets/iphone.jpg";
 import mic from "../../assets/mic.jpg";
 import desktop from "../../assets/monitor1.jpg";
 import drone from "../../assets/drone.jpeg";
+import "./Items.css";
 
 
 function Items(props) {
@@ -51,7 +52,7 @@ function Items(props) {
       return <Button variant="danger">Check In</Button>;
     } else if (page === "Gadgets" && token && itemStatus !== "RESERVED") {
       return (
-        <Button variant="primary" onClick={() => handleReserve(_id)}>
+        <Button  variant="primary" onClick={() => handleReserve(_id)}>
           Reserve
         </Button>
       );
@@ -93,13 +94,14 @@ function Items(props) {
 
 
   return (
-   
     <CardGroup>
        <div>
-      <Card key={_id} style={{ width: "24rem" }} className="m-1">
+      <Card key={_id} style={{ width: "24rem" }} className="m-1 gadget-main-card">
         {image ? (
-          <Card.Img src={findImage(image)} style={{ width: "20rem" }} alt={`image of ${name}`} />
+          <Card.Img src={findImage(image)} style={{ width: "20rem" }} alt={`image of ${name}`} 
+          className="gadget-img" />
         ) : (
+
           <p>image not found</p>
         )}
         <Card.Title>{item.name}</Card.Title>
@@ -114,6 +116,7 @@ function Items(props) {
       </Card>
       </div>
     </CardGroup>
+
   );
 }
 
