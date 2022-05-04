@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import "./Login.css"
+import { Link } from "react-router-dom";
 
 import Auth from '../utils/auth';
 
@@ -44,11 +45,12 @@ const Login = (props) => {
     <main className="flex-row justify-center mb-4 form-body">
       <div className="col-12 col-md-6">
         <div className="card">
-          <h4 className="card-header">Login</h4>
+          <h4 className="card-header text-center">Login</h4>
           <div className="card-body">
             <form onSubmit={handleFormSubmit}>
               <input
-                className="form-input"
+              // get the form input in the middle
+                className="form-control mb-3"
                 placeholder="Your email"
                 name="email"
                 type="email"
@@ -57,7 +59,7 @@ const Login = (props) => {
                 onChange={handleChange}
               />
               <input
-                className="form-input"
+                className="form-control mb-3"
                 placeholder="******"
                 name="password"
                 type="password"
@@ -73,6 +75,11 @@ const Login = (props) => {
             {error && <div>Login failed</div>}
           </div>
         </div>
+      <div className="py-4">
+    <p className="text-center">
+      Don't have an account? <Link to="/signup">Signup</Link>
+    </p>
+  </div>
       </div>
     </main>
   );

@@ -11,7 +11,7 @@ const Navigation = () => {
     Auth.logout();
   };
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" className="justify-content-center">
       <Container>
         <Navbar.Brand>
           <Link to="/">
@@ -41,7 +41,7 @@ const Navigation = () => {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
                 <LinkContainer to="/login">
-                  <Nav.Link>Login</Nav.Link>
+                  <Nav.Link >Login</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/signup">
                   <Nav.Link>Signup</Nav.Link>

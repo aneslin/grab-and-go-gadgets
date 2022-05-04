@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, CardGroup} from "react-bootstrap";
 import { RESERVE_ITEM } from "../../utils/mutations";
 import Auth from "../../utils/auth";
+import laptop from "../../assets/laptop.jpg";
+import headphones from "../../assets/headphones1.jpeg";
+import iphone from "../../assets/iphone.jpg";
+import mic from "../../assets/mic.jpg";
+import desktop from "../../assets/monitor1.jpg";
+import drone from "../../assets/drone.jpeg";
+
 
 function Items(props) {
   const { _id, name, image, description, dueDate, itemStatus, page } = props;
@@ -19,13 +26,15 @@ function Items(props) {
   };
   const [item, setItem] = useState(currentItem);
 
+
+
   const handleReserve = async (id) => {
     try {
       console.log(id);
       const data = await reserveItem({
         variables: { itemId: id, dueDate: "TODAY" },
       });
-      console.log("====>", data)
+      console.log("====>", data);
       const updatedItem = await { data };
 
       console.log(updatedItem);
@@ -56,15 +65,40 @@ function Items(props) {
       return <></>;
     }
   };
+  
+  // render different images from assets to the card 
+  const findImage = function (items) {
+    if (name === "Laptop") {
+      return laptop;
+    } 
+    if (name === "Headphones") {
+      return headphones;
+    } 
+    if (name === "Iphone") {
+      return iphone;
+    } 
+    if (name === "Microphone") {
+      return mic;
+    } 
+    if (name === "Monitor") {
+      return desktop;
+    } 
+    if (name === "Drone") {
+      return drone;
+    } 
+    else {
+      return laptop;
+    }
+  };
+
 
   return (
-    <div>
+   
+    <CardGroup>
+       <div>
       <Card key={_id} style={{ width: "24rem" }} className="m-1">
         {image ? (
-          <Card.Img
-            src={"https://placekitten.com/150/150"}
-            alt={`image of ${name}`}
-          />
+          <Card.Img src={findImage(image)} style={{ width: "20rem" }} alt={`image of ${name}`} />
         ) : (
           <p>image not found</p>
         )}
@@ -73,10 +107,13 @@ function Items(props) {
         <Card.Text>
           <span>{item.itemStatus}</span>
         </Card.Text>
-     
-      <Card.Footer>{findPage(page, token, item.itemStatus, item._id)}</Card.Footer> 
+
+        <Card.Footer>
+          {findPage(page, token, item.itemStatus, item._id)}
+        </Card.Footer>
       </Card>
-    </div>
+      </div>
+    </CardGroup>
   );
 }
 
