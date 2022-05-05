@@ -56,7 +56,7 @@ function Items(props) {
           Reserve
         </Button>
       );
-    } else if (page === "Gadgets" && itemStatus === "RESERVED") {
+    } else if ( itemStatus === "RESERVED") {
       return (
         <Button variant="primary" disabled>
           Reserved
@@ -106,9 +106,7 @@ function Items(props) {
         )}
         <Card.Title>{item.name}</Card.Title>
         <Card.Text>{item.description}</Card.Text>
-        <Card.Text>
-          <span>{item.itemStatus}</span>
-        </Card.Text>
+        
 
         <Card.Footer>
           {findPage(page, token, item.itemStatus, item._id)}
