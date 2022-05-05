@@ -38,6 +38,9 @@ const Navigation = () => {
                 <LinkContainer to="/contact">
                   <Nav.Link>Contact Us</Nav.Link>
                 </LinkContainer>
+                <LinkContainer to="/admin">
+                  <Nav.Link>Admin Control</Nav.Link>
+                </LinkContainer>
                 <LinkContainer to="/logout">
                   <Nav.Link onClick={logout}>Logout</Nav.Link>
                 </LinkContainer>
