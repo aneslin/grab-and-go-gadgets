@@ -16,8 +16,8 @@ const DonationButton = ({ itemID, ammount }) => {
       .redirectToCheckout({
         lineItems: [{ price: itemID, quantity: 1 }],
         mode: "payment",
-        successUrl: window.location.protocol + "//google.com",
-        cancelUrl: window.location.protocol + "//google.com",
+        successUrl: window.location.protocol + "//https://group9-grab-gadget.herokuapp.com/",
+        cancelUrl: window.location.protocol + "//https://group9-grab-gadget.herokuapp.com/",
         submitType: "donate",
       })
       .then(function (result) {
