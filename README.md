@@ -25,6 +25,8 @@ An app for managing equipment lending.  An admin user may create new items.  A c
 * Responsive design
 * Users can authenticate
 
+## Screenshot
+![Screenshot of gadgets page](./client/src/assets/screenshot.png)
+## Deployed URL
 
-
-HELLO
+[Deployed gadgets url](https://group9-grab-gadget.herokuapp.com/)
