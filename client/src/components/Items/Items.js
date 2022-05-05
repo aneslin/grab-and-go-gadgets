@@ -56,7 +56,7 @@ function Items(props) {
           Reserve
         </Button>
       );
-    } else if (page === "Gadgets" && itemStatus === "RESERVED") {
+    } else if ( itemStatus === "RESERVED") {
       return (
         <Button variant="primary" disabled>
           Reserved
@@ -94,6 +94,7 @@ function Items(props) {
 
 
   return (
+
     // display everything on react boostrap card
     <Card className="card-item " style={{ width: "23rem" }}>
       <Card.Img className="card-img" variant="top" src={findImage(name)} />
@@ -105,6 +106,7 @@ function Items(props) {
         </Card.Body>
         <Card.Footer variant="primary">
         {findPage(page, token, item.itemStatus, item._id)}
+
         </Card.Footer>
       
     </Card>

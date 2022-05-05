@@ -1,3 +1,4 @@
+
 .card-item {
   /* Make react bootstrap cards even length */
     width: 100%;
@@ -13,12 +14,14 @@
     margin: 10px;
 }
 
+
 .card-img {
 /* make image even length */
     height: auto;
     max-height: 250px;
     width: auto;
     max-width: 250px;
+
     border-radius: 10px;
     margin: 0 auto;
     display: block;
@@ -31,5 +34,6 @@
     align-items: center;
     padding: 10px;
     margin: 10px;
+
 
 }
