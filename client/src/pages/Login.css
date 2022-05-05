@@ -1,0 +1,9 @@
+.form-body {
+        /* place an image next to login form */
+        min-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+}
+  
