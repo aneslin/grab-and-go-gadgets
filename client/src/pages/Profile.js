@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { capitalizeFirstLetter } from '../utils/helpers';
 import { useQuery } from "@apollo/client";
 import Auth from "../utils/auth";
 import { QUERY_ME } from "../utils/queries";
@@ -11,9 +12,18 @@ import {
   Card,
   Stack,
   Container,
+  CardGroup
 } from "react-bootstrap";
 
 const Profile = () => {
+ 
+  const [pages] = useState([
+    {
+        name: "My Profile"
+    }
+]);
+const [currentPage] = useState(pages[0]);
+
   const page = "profile";
   const { loading, data, error, refetch } = useQuery(QUERY_ME);
 
@@ -51,7 +61,16 @@ const Profile = () => {
 
   return (
     <Container>
-      <h1 className="mb-3">My Profile </h1>
+      <div className="masthead text-center text-black d-flex">
+            <div className="container my-auto">
+                <div className="row">
+                    <div className="col-lg-10 mx-auto">
+                        <h1>{capitalizeFirstLetter(currentPage.name)}</h1>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+        </div>
       <section>
         <div>
           <h3>My info</h3>

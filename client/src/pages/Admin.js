@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Form, Button, Alert, Card } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { CREATE_ITEM, ALTER_USER, RETURN_ITEM } from "../utils/mutations";
+import "./Admin.css";
+
 
 const Admin = () => {
   const [returnItemForm, setReturnItemForm] = useState(
@@ -94,7 +96,7 @@ const handleReturnSubmit = async (event) => {
   return (
     <div>
       <div>Admin</div>
-      <main className="flex-row justify-center mb-4 form-body">
+      <main className="new-image-input">
         <div className="col-12 col-md-10">
           <div className="card">
             <h4 className="card-header">New Image</h4>
@@ -139,7 +141,7 @@ const handleReturnSubmit = async (event) => {
         </div>
       
       <div>
-        <Card>
+        <Card className="promote-user">
        <Card.Title> <h4>Promote user</h4></Card.Title>
         <form onSubmit={handleAlterUserSubmit}>
           <input

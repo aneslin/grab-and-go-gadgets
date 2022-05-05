@@ -42,7 +42,6 @@ const token = Auth.loggedIn() ? Auth.getToken() : null;
               <Col key = {_id}>
                 {" "}
                 <Items
-                 
                   page = {currentPage.name}
                   token = {token}
                   _id={_id}
