@@ -11,6 +11,8 @@ const Navigation = () => {
     event.preventDefault();
     Auth.logout();
   };
+
+
   return (
     <Navbar bg="light" expand="lg" className="justify-content-center">
       <Container>
@@ -19,6 +21,7 @@ const Navigation = () => {
             <img src={logo} alt="" style={{ width: 50, height: 50 }} />
           </Link>
         </Navbar.Brand>
+   
         {Auth.loggedIn() ? (
           <>
             <Routes>
@@ -35,8 +38,11 @@ const Navigation = () => {
                 <LinkContainer to="/about">
                   <Nav.Link>About us</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/contact">
+                {/* <LinkContainer to="/contact">
                   <Nav.Link>Contact Us</Nav.Link>
+                </LinkContainer> */}
+                <LinkContainer to="/admin">
+                  <Nav.Link>Admin Control</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/logout">
                   <Nav.Link onClick={logout}>Logout</Nav.Link>
@@ -45,16 +51,6 @@ const Navigation = () => {
               <Link className="text-white"to="/donate">Donate </Link>
               </Button>
               </Nav>
-            {/* <Link to="/profile">Me</Link>
-            <Link to="/gadget">Gadgets</Link>
-            <Link to="/about">About us</Link>
-            <Link to="/contact">Contact</Link>
-            <a href="/" onClick={logout}>
-              Logout
-            </a>
-            <Button> 
-              <Link className="text-white"to="/donate">Donate </Link>
-              </Button> */}
           </>
         ) : (
           <>
@@ -70,12 +66,13 @@ const Navigation = () => {
                 <LinkContainer to="/about">
                   <Nav.Link>About us</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/contact">
+                {/* <LinkContainer to="/contact">
                   <Nav.Link>Contact Us</Nav.Link>
-                </LinkContainer>
+                </LinkContainer> */}
               </Nav>
             <br />
           </>
+        
         )}
       </Container>
     </Navbar>

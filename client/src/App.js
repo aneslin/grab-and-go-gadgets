@@ -49,7 +49,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />,
           <Route path="/gadget" element={<Gadget />} />
           <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+          {/* <Route path="/contact" element={<Contact />} /> */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/donate" element={<Donate />} />
           <Route path="/admin" element={<Admin />} />

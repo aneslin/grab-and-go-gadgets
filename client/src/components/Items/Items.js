@@ -9,6 +9,9 @@ import iphone from "../../assets/iphone1.jpeg";
 import mic from "../../assets/mic.jpg";
 import desktop from "../../assets/monitor1.jpg";
 import drone from "../../assets/drone.jpeg";
+import watch from "../../assets/watch.jpg";
+import Sony from "../../assets/sony.jpg";
+import Playstation from "../../assets/ps5.jpg";
 import "./Items.css";
 
 
@@ -87,6 +90,15 @@ function Items(props) {
     if (name === "Drone") {
       return drone;
     } 
+    if (name === "Watch") {
+      return watch;
+    } 
+    if (name === "Sony") {
+      return Sony;
+    } 
+    if (name === "Ps5") {
+      return Playstation;
+    } 
     else {
       return laptop;
     }
@@ -96,7 +108,7 @@ function Items(props) {
   return (
 
     // display everything on react boostrap card
-    <Card className="card-item " style={{ width: "23rem" }}>
+    <Card className="card-item " style={{ width: "24rem" }}>
       <Card.Img className="card-img" variant="top" src={findImage(name)} />
       <Card.Body className="card-body">
         <Card.Title>{name}</Card.Title>
