@@ -5,7 +5,7 @@ import { RESERVE_ITEM } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 import laptop from "../../assets/laptop.jpg";
 import headphones from "../../assets/headphones1.jpeg";
-import iphone from "../../assets/iphone.jpg";
+import iphone from "../../assets/iphone1.jpeg";
 import mic from "../../assets/mic.jpg";
 import desktop from "../../assets/monitor1.jpg";
 import drone from "../../assets/drone.jpeg";
@@ -52,7 +52,7 @@ function Items(props) {
       return <Button variant="danger">Check In</Button>;
     } else if (page === "Gadgets" && token && itemStatus !== "RESERVED") {
       return (
-        <Button  variant="primary" onClick={() => handleReserve(_id)}>
+        <Button  onClick={() => handleReserve(_id)}>
           Reserve
         </Button>
       );
@@ -94,28 +94,20 @@ function Items(props) {
 
 
   return (
-    <CardGroup>
-       <div>
-      <Card key={_id} style={{ width: "24rem" }} className="m-1 gadget-main-card">
-        {image ? (
-          <Card.Img src={findImage(image)} style={{ width: "20rem" }} alt={`image of ${name}`} 
-          className="gadget-img" />
-        ) : (
-
-          <p>image not found</p>
-        )}
-        <Card.Title>{item.name}</Card.Title>
-        <Card.Text>{item.description}</Card.Text>
-        <Card.Text>
-          <span>{item.itemStatus}</span>
-        </Card.Text>
-
-        <Card.Footer>
-          {findPage(page, token, item.itemStatus, item._id)}
+    // display everything on react boostrap card
+    <Card className="card-item " style={{ width: "23rem" }}>
+      <Card.Img className="card-img" variant="top" src={findImage(name)} />
+      <Card.Body className="card-body">
+        <Card.Title>{name}</Card.Title>
+        <Card.Text>{description}</Card.Text>
+        <Card.Text>{dueDate}</Card.Text>
+        <Card.Text>{itemStatus}</Card.Text>
+        </Card.Body>
+        <Card.Footer variant="primary">
+        {findPage(page, token, item.itemStatus, item._id)}
         </Card.Footer>
-      </Card>
-      </div>
-    </CardGroup>
+      
+    </Card>
 
   );
 }

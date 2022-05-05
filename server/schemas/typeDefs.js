@@ -69,6 +69,8 @@ enum itemStatus{
       alterUser(username:String!, userType: UserType!):User
       returnItem(itemId:ID!, username:String!):User
       cleanUser(username: String!):User
+      # Delete an item in the datase
+      deleteItem(itemId: ID!): Item
   }
 
 `;

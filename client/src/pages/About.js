@@ -10,8 +10,6 @@ function About() {
     const [currentPage] = useState(pages[0]);
 
     return (
-
-        
         <div className="masthead text-center text-black d-flex">
             <div className="container my-auto">
                 <div className="row">

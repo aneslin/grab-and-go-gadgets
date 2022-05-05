@@ -99,7 +99,11 @@ const resolvers = {
         description: description,
       }));
     },
-
+  //Delete a new item
+  deleteItem: async (parent, { itemId }) => {
+    const item = await Item.findOneAndDelete({ _id: itemId });
+    return item;
+  },
     
     //set and item due, date, change status and add to item array FOR SELF
     reserveItem: async (parent, { itemId, itemStatus, dueDate }, context) => {

@@ -72,4 +72,16 @@ mutation ReturnItem($itemId: ID!, $username: String!) {
 `
 
 
+// delete an item from the database
+export const DELETE_ITEM = gql`
+mutation deleteItem($itemId: ID!) {
+  deleteItem(itemId: $itemId) {
+    name
+    image
+    description
+  }
+}
+`
+
+
 
